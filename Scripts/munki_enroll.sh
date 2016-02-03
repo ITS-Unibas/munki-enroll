@@ -14,4 +14,4 @@ manifest_subdir=$identifier"_client"
  	
 dentifier_path=$( echo "$IDENTIFIER" | sed 's/\/[^/]*$//' ); 
  	
-/usr/bin/defaults write /Library/Preferences/ManagedInstalls ClientIdentifier "$identifier_path/$manifest_subdir/$hostname"
+/usr/bin/defaults write /Library/Preferences/ManagedInstalls ClientIdentifier "$manifest_subdir/$hostname"
