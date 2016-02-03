@@ -1,20 +1,17 @@
 #!/bin/sh 
  
-IDENTIFIER=$( defaults read /Library/Preferences/ManagedInstalls ClientIdentifier ); 
-HOSTNAME=$( scutil --get ComputerName );
+identifier="MyRootManifest"
+hostname=$( scutil --get HostName )
+submiturl="https://yourURL.xyz"
+certificate="Path to pkcs12"
+manifest_subdir=$identifier"_client"
 
-SUBMITURL="https://munki/munki-enroll/enroll.php"
-
-# Application paths
-CURL="/usr/bin/curl"
-
-$CURL --max-time 5 --silent --get \
-    -d hostname="$HOSTNAME" \
-    -d identifier="$IDENTIFIER" \
-    "$SUBMITURL"
+/usr/bin/curl --max-time 5 --silent --get \
+	--cert "$certificate" \
+       	-d "hostname=$hostname" \
+	-d "identifier=$identifier" \
+       	"$submiturl"
  	
-IDENTIFIER_PATH=$( echo "$IDENTIFIER" | sed 's/\/[^/]*$//' ); 
+dentifier_path=$( echo "$IDENTIFIER" | sed 's/\/[^/]*$//' ); 
  	
-defaults write /Library/Preferences/ManagedInstalls ClientIdentifier "$IDENTIFIER_PATH/clients/$HOSTNAME"
- 
-exit 0
+/usr/bin/defaults write /Library/Preferences/ManagedInstalls ClientIdentifier "$identifier_path/$manifest_subdir/$hostname"

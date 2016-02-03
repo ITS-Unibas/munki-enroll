@@ -9,8 +9,8 @@ $hostname   = $_GET["hostname"];
 
 // Split the manifest path up to determine directory structure
 $directories		= explode( "/", $identifier, -1 ); 
-$total				= count( $directories );
-$n					= 0;
+$total			= count( $directories );
+$n			= 0;
 $identifier_path	= "";
 while ( $n < $total )
     {
@@ -19,7 +19,7 @@ while ( $n < $total )
     }
 
 // Check if manifest already exists for this machine
-if ( file_exists( '../manifests/' . $identifier_path . '/clients/' . $hostname ) )
+if ( file_exists( '../manifests/' . $identifier_path . '/' . $identifier . '_clients/' . $hostname ) )
     {
         echo "Computer manifest already exists.";
     }
@@ -27,9 +27,9 @@ else
     {
         echo "Computer manifest does not exist. Will create.";
         
-        if ( !is_dir( '../manifests/' . $identifier_path . 'clients/' ) )
+        if ( !is_dir( '../manifests/' . $identifier_path . $identifier . '_clients/' ) )
             {
-                mkdir( '../manifests/' . $identifier_path . 'clients/', 0755, true );
+                mkdir( '../manifests/' . $identifier_path . $identifier . '_clients/', 0755, true );
             }
         
         // Create the new manifest plist
@@ -45,7 +45,7 @@ else
         $array->add( new CFString( $identifier ) );
         
         // Save the newly created plist
-        $plist->saveXML( '../manifests/' . $identifier_path . 'clients/' . $hostname );
+        $plist->saveXML( '../manifests/' . $identifier_path . $identifier . '_clients/' . $hostname );
         
     }
 
